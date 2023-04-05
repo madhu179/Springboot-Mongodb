@@ -43,4 +43,9 @@ public class EmployeeController {
         employeeService.deleteEmployee(empId);
         return "The employee with Id : "+empId+" is deleted successfully";
     }
+
+    @GetMapping("/find")
+    public List<Employee> findEmployee(){
+        return employeeService.findEmployee();
+    }
 }

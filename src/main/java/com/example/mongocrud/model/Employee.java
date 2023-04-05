@@ -13,11 +13,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document(collection = "employee")
 public class Employee {
-    @Id
+//    @Id
 //    @Indexed
     private String empId;
     private String name;
     private String email;
     private String designation;
 
+//    public Document toDoc(){
+//        Document doc = new Document();
+//    }
 }

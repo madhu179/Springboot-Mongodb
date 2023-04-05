@@ -1,6 +1,7 @@
 package com.example.mongocrud.service.impl;
 
 import com.example.mongocrud.model.Employee;
+import com.example.mongocrud.repository.CustomRepository;
 import com.example.mongocrud.repository.EmployeeRepository;
 import com.example.mongocrud.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private CustomRepository repo;
 
     @Override
     public List<Employee> getEmployees() {
@@ -44,6 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             emp.setEmail(employee.getEmail());
             emp.setDesignation(employee.getDesignation());
             employeeRepository.save(emp);
+
             return emp;
         } else{
             throw new RuntimeException("Employee with id : "+empId+" not present");
@@ -56,6 +61,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(!op.isPresent()){
             throw new RuntimeException("Employee with id : "+empId+" not present");
         }
+    }
+
+    @Override
+    public List<Employee> findEmployee(){
+        return repo.findByText("random");
     }
 
 }

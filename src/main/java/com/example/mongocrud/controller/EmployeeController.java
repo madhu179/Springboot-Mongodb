@@ -48,4 +48,11 @@ public class EmployeeController {
     public List<Employee> findEmployee(){
         return employeeService.findEmployee();
     }
+
+    //    @PutMapping("/template/{empId}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public Employee updateEmployeeTemplate(@RequestBody Employee employee, @PathVariable String empId){
+//        return employeeService.updateEmployeeTemplate(employee, empId);
+//    }
+
 }

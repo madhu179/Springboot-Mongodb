@@ -1,6 +1,7 @@
 package com.example.mongocrud.service;
 
 import com.example.mongocrud.model.Employee;
+import com.mongodb.client.result.UpdateResult;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface EmployeeService {
     void deleteEmployee(String empId);
 
     List<Employee> findEmployee();
+
+    //    UpdateResult updateEmployeeTemplate(Employee employee, String empId);
 }

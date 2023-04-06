@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -13,14 +12,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document(collection = "employee")
 public class Employee {
-//    @Id
-//    @Indexed
+    @Id
     private String empId;
     private String name;
     private String email;
     private String designation;
 
-//    public Document toDoc(){
-//        Document doc = new Document();
-//    }
 }

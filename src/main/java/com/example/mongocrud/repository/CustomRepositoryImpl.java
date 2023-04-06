@@ -27,7 +27,8 @@ public class CustomRepositoryImpl implements CustomRepository {
         MongoDatabase database = client.getDatabase("testdb");
         MongoCollection<Document> collection = database.getCollection("employee");
 
-        FindIterable<Document> result = collection.find(new Document("empId", "0987"));
+
+        FindIterable<Document> result = collection.find(new Document("empId", "007"));
 
         result.forEach(doc -> posts.add(converter.read(Employee.class,doc)));
 

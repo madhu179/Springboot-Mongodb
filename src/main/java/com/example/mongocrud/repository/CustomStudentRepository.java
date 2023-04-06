@@ -24,13 +24,19 @@ public class CustomStudentRepository {
     @Autowired
     MongoConverter converter;
 
+    MongoCollection<Document> collection;
+    private MongoCollection<Document> getCollection(){
+        MongoDatabase database = client.getDatabase("testdb");
+        this.collection = database.getCollection("student");
+        return collection;
+    }
+
 //    @Override
     public Student findById(String stuId) {
 
         final List<Student> students = new ArrayList<>();
 
-        MongoDatabase database = client.getDatabase("testdb");
-        MongoCollection<Document> collection = database.getCollection("student");
+        this.collection = getCollection();
 
         FindIterable<Document> result = collection.find(new Document("stuId", stuId));
 
@@ -46,8 +52,7 @@ public class CustomStudentRepository {
     public List<Student> findAll() {
 
         final List<Student> students = new ArrayList<>();
-        MongoDatabase database = client.getDatabase("testdb");
-        MongoCollection<Document> collection = database.getCollection("student");
+        this.collection = getCollection();
 
         FindIterable<Document> result = collection.find();
 
@@ -61,9 +66,7 @@ public class CustomStudentRepository {
     }
 
     public Student addStudent(Student student) {
-        MongoDatabase database = client.getDatabase("testdb");
-        MongoCollection<Document> collection = database.getCollection("student");
-
+        this.collection = getCollection();
         collection.insertOne(student.toDocument());
 
         return student;
@@ -71,8 +74,7 @@ public class CustomStudentRepository {
     }
 
     public Student updateStudent(Student student, String stuId) {
-        MongoDatabase database = client.getDatabase("testdb");
-        MongoCollection<Document> collection = database.getCollection("student");
+        this.collection = getCollection();
 
         collection.updateOne(new Document("stuId", stuId),
                 new Document("$set", student.toDocument()));
@@ -82,8 +84,7 @@ public class CustomStudentRepository {
     }
 
     public Student deleteStudent(String stuId) {
-        MongoDatabase database = client.getDatabase("testdb");
-        MongoCollection<Document> collection = database.getCollection("student");
+        this.collection = getCollection();
 
         Document doc = collection.findOneAndDelete(new Document("stuId", stuId));
 

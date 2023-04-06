@@ -4,7 +4,12 @@ import com.example.mongocrud.model.Employee;
 import com.example.mongocrud.repository.CustomRepository;
 import com.example.mongocrud.repository.EmployeeRepository;
 import com.example.mongocrud.service.EmployeeService;
+import com.mongodb.client.result.UpdateResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +23,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private CustomRepository repo;
+
+    @Autowired
+    private MongoTemplate template;
 
     @Override
     public List<Employee> getEmployees() {
@@ -36,6 +44,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(Employee employee) {
+        Optional<Employee> op = employeeRepository.findByEmpId(employee.getEmpId());
+        if(op.isPresent()) {
+            throw new RuntimeException("Employee with id : "+employee.getEmpId()+" already exists");
+        }
         return employeeRepository.save(employee);
     }
 
@@ -67,5 +79,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> findEmployee(){
         return repo.findByText("random");
     }
+
+    //    @Override
+//    public UpdateResult updateEmployeeTemplate(Employee employee, String empId){
+//        Query query= new Query();
+//        query.addCriteria(Criteria.where("empId").is(empId));
+//
+//        Update update = new Update();
+//        update.set("name", employee.getName());
+//        update.set("email", employee.getEmail());
+//
+//        return template.upsert(query, update, Employee.class);
+//    }
 
 }
